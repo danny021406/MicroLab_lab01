@@ -1,5 +1,5 @@
 # MicroLab_lab01
-Hamming distance 
+Hamming distance \n
 Fibonacci serial 
 Bubble sort 
 Monte-Carlo Method for Estimating Pi with FPU and RNG
