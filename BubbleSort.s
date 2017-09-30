@@ -1,3 +1,8 @@
+ .syntax unified
+ .cpu cortex-m4
+ .thumb 
+ 
+
 .data
 	arr1: .byte 0x19, 0x34, 0x14, 0x32, 0x52, 0x23, 0x61, 0x29
 	arr2: .byte 0x18, 0x17, 0x33, 0x16, 0xFA, 0x20, 0x55, 0xAC 
@@ -10,7 +15,8 @@
 	
 	
 do_sort:    
-	movs r2, #-1
+	movs r2, #0
+	subs r2, r2, #1
 	movs r7, #len
 	
 	
@@ -18,9 +24,10 @@ outLoop:
 	adds r2, r2, #1
 	cmp r2, r7
 	beq end
-	movs r3, #-1
-	ldr r8, =r0
-	subs r8, #-1
+	movs r3, #0
+	subs r3, r3, #1
+	movs r8, r0
+	subs r8, #1
 	subs r6, r7, r2
 	
 innerLoop:
@@ -31,15 +38,15 @@ innerLoop:
 	beq outLoop
 	
 	ldrb r4, [r8]
-	ldrb r5, [r8, 1]
+	ldrb r5, [r8, #1]
 	
 	cmp r4, r5
 	ble innerLoop
 	
-	movs r9, r4
-	strb r4, [r9]
-	strb r9, [r9, 1]
+	strb r5, [r8]
+	strb r4, [r8, #1]
 	
+	bl innerLoop
 
 end:
 	bx lr 
@@ -73,5 +80,4 @@ r5 = j+1's tmp data
 r6 = j's end judge
 r7 = length
 r8 = array tmp address
-r9 = swap tmp data
 */
