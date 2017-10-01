@@ -4,24 +4,26 @@
  
 .text     
 	.global main 
-	.equ N, 10
+	.equ N, 20
 
 fib:     
 	cmp r0, r1
 	ble end
 	adds r4, r2, r3
+	cmp r4, #0           // > 0x7FFFFFFF=>2147483647
+	ble endOverflow
 	movs r2, r4
 	adds r1, r1, #1 
 	cmp r0, r1
 	ble end
 	adds r4, r2, r3
+	cmp r4, #0           // > 0x7FFFFFFF=>2147483647
+	ble endOverflow
 	movs r3, r4
 	adds r1, r1, #1 
 	b fib
 	
 end:
-	cmp r0, #0
-	ble endOverflow
 	bx lr 
 	
 endOverflow:
