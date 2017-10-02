@@ -15,6 +15,7 @@ http://www.st.com/content/ccc/resource/technical/document/programming_manual/6c/
     vcvt_s32_f32(Sd, Sm) Sd = int(Sm)
 
 fault:
+
     ▪ HardFault: is the default exception and can be triggered because of an error during exception
     processing, or because an exception cannot be managed by any other exception mechanism.
     ▪ MemManage: detects memory access violations to regions that are defined in the Memory
