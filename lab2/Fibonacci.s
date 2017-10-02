@@ -8,7 +8,7 @@
 
 fib:     
 	cmp r0, r1
-	ble end
+	ble end  // less than equal than
 	adds r4, r2, r3
 	cmp r4, #0           // > 0x7FFFFFFF=>2147483647
 	ble endOverflow
@@ -34,7 +34,7 @@ endOverflow:
 	
 main:     
 	movs r0, #N     
-	movs r1, #0
+	movs r1, #3
 	movs r2, #1
 	movs r3, #1
 	movs r4, #0
