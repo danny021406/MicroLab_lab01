@@ -1,0 +1,10 @@
+git remote add origin https://github.com/danny021406/MicroLab_lab01.git:origin 是網址代稱
+git push origin master(branch): 到伺服器端
+git commit -m "comment": local端 
+git checkout branchname: 移動到某branch
+git branch branchname:Make a new branch
+git revert : back to previous patch
+git log : checkout patch message
+git -l: just like log, but it show a tree.
+git merge : merge two branch together
+git pull origin master: pull the files down
