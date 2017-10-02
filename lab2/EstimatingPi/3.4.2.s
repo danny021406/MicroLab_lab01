@@ -29,8 +29,21 @@ set_flag:
 	str r2,[r0,r1]  bx lr 
  
 enable_fpu:  
-	//Your code in 3.4.1    
-	bx lr 
+
+
+						// CPACR is located at address 0xE000ED88
+	ldr.w r0, =0xE000ED88
+						//Read CPACR
+	ldr r1, [R0]
+						//Set bits 20-23 to enable CP10 and CP11 coprocessors
+	orr r1, r1, #(0xF << 20)
+						//Write back the modified value to the CPACR
+	str r1, [r0]		// wait for store to complete
+	dsb
+						//reset pipeline now the FPU is enabled
+	isb
+
+	bx lr
  
 enable_rng:  
 	//Your code start from here  
