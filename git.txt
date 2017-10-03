@@ -8,3 +8,5 @@ git log : checkout patch message
 git -l: just like log, but it show a tree.
 git merge : merge two branch together
 git pull origin master: pull the files down
+git reset --hard HEAD: force to the head
+git fetch --all: get the status (now encluding every branch) 
