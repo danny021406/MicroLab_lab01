@@ -45,5 +45,6 @@ main:
 	ble L
 	cmp r0, #1
 	ble L
+    movs r4, #1
 	bl fib 
 L: b L
