@@ -102,19 +102,36 @@ chk_PLLON:
 	
 	bl EnableFpu  
 	bl EnableRng  
+	
+	movs r6, #1000000
+	vmovs s4, #1000000
+	movs r8, #1
+	vmov s3, #1
+	
+StartLoop:
+	cmp r6, #0
+	ble EndLoop
+	subs r6, r6, #1
 	bl GetRand
 	vmov.f32 s0, r5
 	vcvt.f32.u32 s0, s0
-	
-	bl GetRand
-	vmov.f32 s1, r5
-	vcvt.f32.u32 s1, s1
 	
 	vmul.f32 s0, s0, s0
 	vmul.f32 s1, s1, s1
 	vadd.f32 s1, s0, s1
 	
 	vsqrt.f32 s2, s1
+	vcmp s3, s2
+	ble StartLoop
+	adds r8, r8, #1
+	b StartLoop
+
+EndLoop:
+	vmov.f32 s0, r8
+	vcvt.f32.u32 s0, s0
+	vdiv s4, s4, s0
+	vmul s4, s4, #4
+	
 
 L:b L	
 
