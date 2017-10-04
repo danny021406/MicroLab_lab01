@@ -109,8 +109,9 @@ chk_PLLON:
 	bl EnableRng
 	bl GetRand
 	movs r1, #0
+	ldr r0, =RNG_BASE
 	ldr r10, =RNG_SR_OFFSET
-	str r1, [r10]
+	str r1, [r0,r10]
 	vmov.f32 s0, r5
 	vcvt.f32.u32 s0, s0
 
@@ -125,7 +126,3 @@ chk_PLLON:
 	vsqrt.f32 s2, s3
 
 L:b L
-
-
-
-
