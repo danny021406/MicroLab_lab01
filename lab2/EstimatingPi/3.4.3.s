@@ -2,7 +2,7 @@
  .cpu cortex-m4
  .thumb
  .data
-  	x: .float 4294967296.0
+  	x: .float 2147483647.0
  .text
  .global main
  .equ RCC_BASE,0x40021000
@@ -148,7 +148,8 @@ back2:
 
 	vsqrt.f32 s2, s1
 	vcmp.f32 s5, s2
-	ble StartLoop
+	VMRS	APSR_nzcv,FPSCR
+	blt StartLoop
 	adds r8, r8, #1
 	b StartLoop
 
@@ -157,7 +158,7 @@ EndLoop:
 	vcvt.f32.u32 s0, s0
 	vdiv.f32 s4, s0, s4
 	vmov.f32 s6, #4.0
-	vmul.f32 s4, s4, s6
+	vmul.f32 s0, s4, s6
 
 
 L:b L
@@ -168,7 +169,3 @@ GetPos1:
 GetPos2:
 	neg r5, r5
 	b back2
-
-
-
-
