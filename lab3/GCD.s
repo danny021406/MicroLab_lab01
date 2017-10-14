@@ -15,16 +15,29 @@ main:
 	ldr r0, =n
 	ldr r2, [r0]
 	movs r3, #1
+	movs r0, #2
+	movs r12, #4
+	
+	push {r3}
 	push {r1}
 	push {r2}
-	bl GCD
-	
+	bl GCDS
+	b GCDEnd
+GCDS:
+	pop {r2}
+	pop {r1}
+	push {lr}
+	adds r12, r12, #8
+	b GCDT
 GCD:
     //TODO: Implement your GCD function
 	pop {r2}
 	pop {r1}
+GCDT:
 	bl Gofunction
-	b GCD
+	pop {r11}
+	mul r8, r11, r8
+	pop {pc}
 	
 
 Gofunction:
@@ -46,6 +59,9 @@ Gofunction:
 	cmp r7, #0
 	beq function3
 	
+	push {r3}
+	push {lr}
+	adds r12, r12, #8
 	bl function4
 	push {r9}
 	push {r10}
@@ -54,55 +70,60 @@ Gofunction:
 
 	
 ReturnHandleReturnA:
+	ldr r8, =max_size
+	str r12, [r8]
 	movs r8, r1
-	b GCDEnd
+	pop {pc}
 	
 ReturnHandleReturnB:
+	ldr r8, =max_size
+	str r12, [r8]
 	movs r8, r2
-	b GCDEnd
+	pop {pc}
 
 function1:
 	lsrs r1, r1, #1
 	lsrs r2, r2, #1
+	push {r0}
+	push {lr}
+	adds r12, r12, #8
 	push {r1}
 	push {r2}
-	bx lr
+	b GCD
 	
 function2:
 	lsrs r1, r1, #1
+	push {r3}
+	push {lr}
+	adds r12, r12, #8
 	push {r1}
 	push {r2}
-	bx lr
+	b GCD
 	
 function3:
 	lsrs r2, r2, #1
+	push {r3}
+	push {lr}
+	adds r12, r12, #8
 	push {r1}
 	push {r2}
-	bx lr
+	b GCD
 	
 function4:
-	push {lr}
-	bl Abs
-	pop {pc}
-	
-	
-Abs:
-	push {lr}
 	subs r9, r1, r2
 	cmp r9, #0
 	ble negHandle
 	movs r10, r2
-	pop {pc}
+	bx lr
 	
 negHandle:
 	neg r9, r9
 	movs r10, r1
-	pop {pc}
-	
-
+	bx lr
 	
 GCDEnd:
-	adds r10, r10, r11
+	ldr r12, =result
+	str r8, [r12]
 	b GCDEnd
 
 	
@@ -118,7 +139,7 @@ GCDEnd:
 3=>    else if(b % 2 == 0) return gcd(a, b >> 1);
 4=>    else return gcd(abs(a - b), Min(a, b));
 }
-
+r0 = 2
 r1 = a
 r2 = b
 r3 = 1
@@ -129,4 +150,5 @@ r7 = other function flag
 r8 = answer
 r9 = calculate abs mins a
 r10 = calculate abs mins b
+r12 stack max size
 */

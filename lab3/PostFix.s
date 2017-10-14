@@ -12,6 +12,7 @@
 main:
 	LDR	R0, =postfix_expr
 	ldr r4, =user_stack
+	adds r4, r4, #0x78
 	
 PostFixLoop:
 	ldrb r1, [r0], #1
@@ -24,18 +25,18 @@ PostFixLoop:
 	cmp r5, #1
 	beq ChangeToNegative
 backPostFixLoop:
-	//push {r2}
+	push {r2}
 	str r2, [r4]
-	adds r4, r4, #4
+	subs r4, r4, #4
 	b PostFixLoop
 	
 
 //TODO: Setup stack pointer to end of user_stack and calculate the expression using PUSH, POP operators, and store the result into expr_result
 
 program_end:
-	ldr r1, [r4, #-4]
+	ldr r1, [r4, #4]
 	ldr r4, =expr_result
-	//pop {r1}
+	pop {r1}
 	str r1, [r4]
 L:		B L
 
@@ -70,18 +71,18 @@ HandleNegative:
 	b back
 	
 DoOperation:
-	//pop {r6, r7}
-	subs r4, r4, #4
+	pop {r7, r6}
+	adds r4, r4, #4
 	ldr r6, [r4]
-	subs r4, r4, #4
+	adds r4, r4, #4
 	ldr r7, [r4]
 	cmp r5, #1
 	beq DoSub
 	adds r6, r6, r7
 backDoOperation:
-	//push {r6}
+	push {r6}
 	str r6, [r4]
-	adds r4, r4, #4
+	subs r4, r4, #4
     b PostFixLoop
 	
 DoSub:
