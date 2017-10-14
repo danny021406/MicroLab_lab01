@@ -37,7 +37,7 @@ program_end:
 	ldr r4, =expr_result
 	//pop {r1}
 	str r1, [r4]
-	B		program_end
+L:		B L
 
 atoi:
 	cmp r1, #0x2D				//0x2D => -
@@ -85,7 +85,7 @@ backDoOperation:
     b PostFixLoop
 	
 DoSub:
-	subs r6, r6, r7
+	subs r6, r7, r6
 	b backDoOperation
 
 ChangeToNegative:
