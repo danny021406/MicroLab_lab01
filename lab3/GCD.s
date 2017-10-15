@@ -16,7 +16,7 @@ main:
 	ldr r2, [r0]
 	movs r3, #1
 	movs r0, #2
-	movs r12, #4
+	movs r12, #8
 	
 	push {r3}
 	push {r1}
